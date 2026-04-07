@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scientific Calculator Menu</title>
+</head>
+
+<body style="font-family: Arial; text-align:center; margin-top:40px;">
+
+<!-- MENU BUTTON -->
+<button onclick="toggleCalc()" style="padding:10px 20px; font-size:18px;">
+  ☰ Calculator
+</button>
+
+<!-- CALCULATOR -->
+<div id="calc" style="display:none; margin-top:20px;">
+  
+  <input type="text" id="display" 
+    style="width:220px; height:40px; font-size:18px; text-align:right;"><br><br>
+
+  <!-- Numbers -->
+  <button onclick="press('7')">7</button>
+  <button onclick="press('8')">8</button>
+  <button onclick="press('9')">9</button>
+  <button onclick="press('/')">÷</button><br>
+
+  <button onclick="press('4')">4</button>
+  <button onclick="press('5')">5</button>
+  <button onclick="press('6')">6</button>
+  <button onclick="press('*')">×</button><br>
+
+  <button onclick="press('1')">1</button>
+  <button onclick="press('2')">2</button>
+  <button onclick="press('3')">3</button>
+  <button onclick="press('-')">−</button><br>
+
+  <button onclick="press('0')">0</button>
+  <button onclick="press('.')">.</button>
+  <button onclick="calculate()">=</button>
+  <button onclick="press('+')">+</button><br><br>
+
+  <!-- Scientific -->
+  <button onclick="calcFunc('sin')">sin</button>
+  <button onclick="calcFunc('cos')">cos</button>
+  <button onclick="calcFunc('tan')">tan</button>
+  <button onclick="calcFunc('log')">log</button><br>
+
+  <button onclick="calcFunc('sqrt')">√</button>
+  <button onclick="press('**')">x²</button>
+  <button onclick="clearDisplay()">C</button>
+
+</div>
+
+<script>
+function toggleCalc() {
+  let c = document.getElementById("calc");
+  c.style.display = (c.style.display === "none") ? "block" : "none";
+}
+
+function press(val) {
+  document.getElementById("display").value += val;
+}
+
+function calculate() {
+  try {
+    let result = eval(document.getElementById("display").value);
+    document.getElementById("display").value = result;
+  } catch {
+    alert("Invalid input");
+  }
+}
+
+function clearDisplay() {
+  document.getElementById("display").value = "";
+}
+
+function calcFunc(f) {
+  let v = document.getElementById("display").value;
+
+  if (v === "") return;
+
+  v = parseFloat(v);
+
+  switch(f) {
+    case "sin":
+      document.getElementById("display").value = Math.sin(v);
+      break;
+    case "cos":
+      document.getElementById("display").value = Math.cos(v);
+      break;
+    case "tan":
+      document.getElementById("display").value = Math.tan(v);
+      break;
+    case "log":
+      document.getElementById("display").value = Math.log10(v);
+      break;
+    case "sqrt":
+      document.getElementById("display").value = Math.sqrt(v);
+      break;
+  }
+}
+</script>
+
+</body>
+</html>

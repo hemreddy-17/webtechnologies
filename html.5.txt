@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Calculator</title>
+</head>
+<body>
+
+<script>
+
+// function to show menu
+function showMenu() {
+    return prompt(
+        "===== CALCULATOR MENU =====\n" +
+        "1. Addition (+)\n" +
+        "2. Subtraction (-)\n" +
+        "3. Multiplication (*)\n" +
+        "4. Division (/)\n" +
+        "5. Exit\n" +
+        "Enter your choice (1-5):"
+    );
+}
+
+let choice;
+
+do {
+
+    choice = showMenu();
+
+    if (choice == 5) {
+        alert("Thank you! Calculator closed.");
+        break;
+    }
+
+    // take numbers
+    let num1 = parseFloat(prompt("Enter first number:"));
+    let num2 = parseFloat(prompt("Enter second number:"));
+
+    let result;
+
+    switch(choice) {
+
+        case "1":
+            result = num1 + num2;
+            alert("Result = " + result);
+            break;
+
+        case "2":
+            result = num1 - num2;
+            alert("Result = " + result);
+            break;
+
+        case "3":
+            result = num1 * num2;
+            alert("Result = " + result);
+            break;
+
+        case "4":
+            if(num2 == 0) {
+                alert("Cannot divide by zero!");
+            } else {
+                result = num1 / num2;
+                alert("Result = " + result);
+            }
+            break;
+
+        default:
+            alert("Invalid choice! Please select 1-5");
+    }
+
+} while(choice != 5);
+
+</script>
+
+</body>
+</html>
