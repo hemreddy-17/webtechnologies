@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyShop | E-Commerce Website</title>
+
+    <!-- ============================= -->
+    <!-- EXTERNAL CSS (Embedded Here) -->
+    <!-- ============================= -->
+    <style>
+        footer {
+            background-color: black;
+            color: rgb(87, 213, 28);
+            text-align: center;
+            padding: 10px;
+        }
+
+        h2 {
+            color: rgb(233, 251, 34);
+        }
+
+        input, select {
+            padding: 6px;
+            margin: 5px 0;
+        }
+
+        details {
+            background-color: #eee;
+            padding: 10px;
+        }
+    </style>
+
+    <!-- ============================= -->
+    <!-- INTERNAL CSS -->
+    <!-- ============================= -->
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #090909;
+            color: rgb(114, 107, 107);
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: rgb(174, 174, 65);
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            background-color: rgb(97, 152, 13);
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ea0202;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: rgb(52, 69, 10);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <!-- INLINE CSS -->
+    <h1 style="color: rgb(43, 56, 47);">🛍️ MyShop</h1>
+    <p>Your Online Shopping Store</p>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#offers">Offers</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- HOME -->
+<section id="home">
+    <h2>Welcome</h2>
+    <p style="color: gray;">Buy quality products at the best prices.</p>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+    <h2>Products</h2>
+
+    <table border="1">
+        <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td>Electronics</td>
+            <td>₹15,000</td>
+        </tr>
+        <tr>
+            <td>Laptop</td>
+            <td>Electronics</td>
+            <td>₹45,000</td>
+        </tr>
+    </table>
+</section>
+
+<!-- OFFERS -->
+<section id="offers">
+    <h2>Special Offers</h2>
+    <details>
+        <summary>Festival Sale</summary>
+        <p>Get up to 50% discount on selected items.</p>
+    </details>
+</section>
+
+<!-- ORDER FORM -->
+<section>
+    <h2>Place Your Order</h2>
+
+    <form>
+        <fieldset>
+            <legend>Order Details</legend>
+
+            Name:<br>
+            <input type="text"><br>
+
+            Product:<br>
+            <select>
+                <option>Mobile</option>
+                <option>Laptop</option>
+            </select><br>
+
+            Quantity:<br>
+            <input type="number" min="1"><br><br>
+
+            <!-- INLINE CSS -->
+            <input type="submit" value="Buy Now"
+                   style="background-color: rgb(100, 0, 38); color: white; padding: 8px;">
+        </fieldset>
+    </form>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <h2>Contact Us</h2>
+    <address>
+        Email: support@myshop.com<br>
+        Phone: 9876543210
+    </address>
+</section>
+
+<footer>
+
+</footer>
+
+</body>
+</html>
