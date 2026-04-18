@@ -1,166 +1,143 @@
+ <!DOCTYPE html>
 <html>
 <head>
-    <title>Scientific Calculator</title>
+    <title>Experiment 2 - Register & Login</title>
+
     <style>
-        
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
             border-radius: 10px;
-            width: 340px;
+            width: 300px;
+            box-shadow: 0 0 10px gray;
         }
 
-        #display {
+        h2 {
+            text-align: center;
+        }
+
+        input {
             width: 100%;
-            height: 50px;
-            font-size: 20px;
-            margin-bottom: 10px;
-            text-align: right;
-            padding: 5px;
-            border-radius: 5px;
-            border: none;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-
-        .scientific {
-            display: none;
-            margin-bottom: 10px;
-        }
-
-        .scientific.active {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            padding: 8px;
+            margin: 8px 0;
         }
 
         button {
-            height: 45px;
-            font-size: 16px;
+            width: 100%;
+            padding: 10px;
+            background: #4facfe;
+            color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
         }
 
-        .operator { background: orange; color: white; }
-        .clear { background: red; color: white; }
-        .mode { background: #555; color: white; }
+        .link {
+            text-align: center;
+            margin-top: 10px;
+            color: blue;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
 
-<div class="calculator">
-    <input type="text" id="display" disabled>
+<div class="box">
 
-    <button class="mode" onclick="toggleScientific()">Scientific Mode</button>
+    <!-- REGISTER -->
+    <div id="register">
+        <h2>Register</h2>
 
-    <!-- Scientific Buttons -->
-    <div class="scientific" id="scientificPanel">
-        <button onclick="calculateScientific('sin')">sin</button>
-        <button onclick="calculateScientific('cos')">cos</button>
-        <button onclick="calculateScientific('tan')">tan</button>
-        <button onclick="calculateScientific('sqrt')">√</button>
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="password" id="password" placeholder="Enter Password">
+        <input type="password" id="confirm" placeholder="Confirm Password">
 
-        <button onclick="calculateScientific('log')">log</button>
-        <button onclick="calculateScientific('ln')">ln</button>
-        <button onclick="appendValue(Math.PI)">π</button>
-        <button onclick="appendValue('^')">^</button>
+        <button onclick="register()">Register</button>
+
+        <div class="link" onclick="showLogin()">Already have account? Login</div>
     </div>
 
-    <!-- Basic Buttons -->
-    <div class="buttons">
-        <button onclick="clearDisplay()" class="clear">C</button>
-        <button onclick="appendValue('/') " class="operator">/</button>
-        <button onclick="appendValue('*')" class="operator">*</button>
-        <button onclick="deleteLast()">⌫</button>
+    <!-- LOGIN -->
+    <div id="login" style="display:none;">
+        <h2>Login</h2>
 
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button onclick="appendValue('-')" class="operator">-</button>
+        <input type="email" id="loginEmail" placeholder="Enter Email">
+        <input type="password" id="loginPassword" placeholder="Enter Password">
 
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button onclick="appendValue('+')" class="operator">+</button>
+        <button onclick="login()">Login</button>
 
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button onclick="calculate()" class="operator">=</button>
-
-        <button onclick="appendValue('0')" style="grid-column: span 2;">0</button>
-        <button onclick="appendValue('.')">.</button>
+        <div class="link" onclick="showRegister()">Create account</div>
     </div>
+
 </div>
 
 <script>
-    function appendValue(value) {
-        document.getElementById("display").value += value;
+
+function showLogin() {
+    document.getElementById("register").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+function showRegister() {
+    document.getElementById("register").style.display = "block";
+    document.getElementById("login").style.display = "none";
+}
+
+// REGISTER VALIDATION
+function register() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirm = document.getElementById("confirm").value;
+
+    if (name === "" || email === "" || password === "" || confirm === "") {
+        alert("All fields are required!");
+        return;
     }
 
-    function clearDisplay() {
-        document.getElementById("display").value = "";
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters!");
+        return;
     }
 
-    function deleteLast() {
-        let display = document.getElementById("display");
-        display.value = display.value.slice(0, -1);
+    if (password !== confirm) {
+        alert("Passwords do not match!");
+        return;
     }
 
-    function calculate() {
-        try {
-            let expression = document.getElementById("display").value;
+    // Save data
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
 
-            // Replace ^ with **
-            expression = expression.replace(/\^/g, "**");
+    alert("Registration Successful!");
+    showLogin();
+}
 
-            let result = Function('"use strict";return (' + expression + ')')();
-            document.getElementById("display").value = result;
-        } catch {
-            alert("Invalid Expression");
-        }
+// LOGIN VALIDATION
+function login() {
+    let email = document.getElementById("loginEmail").value;
+    let password = document.getElementById("loginPassword").value;
+
+    let storedEmail = localStorage.getItem("email");
+    let storedPassword = localStorage.getItem("password");
+
+    if (email === storedEmail && password === storedPassword) {
+        alert("Login Successful!");
+    } else {
+        alert("Invalid Email or Password!");
     }
+}
 
-    function calculateScientific(type) {
-        let display = document.getElementById("display");
-        let value = parseFloat(display.value);
-
-        if (isNaN(value)) {
-            alert("Enter a number first");
-            return;
-        }
-
-        let result;
-
-        switch(type) {
-            case 'sin':
-                result = Math.sin(value * Math.PI / 180); // degree mode
-                break;
-            case 'cos':
-                result = Math.cos(value * Math.PI / 180);
-                break;
-            case 'tan':
-                result = Math.tan(value * Math.PI / 180);
-                break;
-            case 'sqrt':
-                result = Math.sqrt(value);
-                break;
-            case 'log':
-                result = Math.log10(value);
-                break;
-            case 'ln':
-                result = Math.log(value);
-                break;
-        }
-
-        display.value = result;
-    }
-
-    function toggleScientific() {
-        document.getElementById("scientificPanel").classList.toggle("active");
-    }
 </script>
 
 </body>
