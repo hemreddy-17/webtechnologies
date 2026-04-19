@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Handling</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #box {
+      width: 200px;
+      height: 100px;
+      background-color: lightblue;
+      margin: 20px auto;
+      line-height: 100px;
+    }
+
+    input {
+      padding: 8px;
+      width: 200px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>JavaScript Event Handling</h2>
+
+<!-- Click Event -->
+<button onclick="showMessage()">Click Me</button>
+
+<!-- Mouse Events -->
+<div id="box" onmouseover="changeColor()" onmouseout="resetColor()">
+  Hover Me
+</div>
+
+<!-- Keyboard Event -->
+<input type="text" placeholder="Type something" onkeyup="showText(this)">
+
+<p id="output"></p>
+
+<script>
+
+  // Click Event
+  function showMessage() {
+    alert("Button Clicked!");
+  }
+
+  // Mouse Over
+  function changeColor() {
+    document.getElementById("box").style.background = "orange";
+  }
+
+  // Mouse Out
+  function resetColor() {
+    document.getElementById("box").style.background = "light
