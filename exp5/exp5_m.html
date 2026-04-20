@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Scientific Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0e0e0e;
+            --dark: #141414;
+            --panel: #1a1a1a;
+            --card: #202020;
+            --border: #2a2a2a;
+            --white: #faf8f4;
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --gray: #888;
+            --red: #e74c3c;
+            --green: #2ecc71;
+            --blue: #3498db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--black);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .calculator {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            width: 380px;
+            padding: 2rem;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+
+        /* ── DISPLAY ── */
+        .display-wrap {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .display-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+        #display {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--gold-light);
+            font-family: 'DM Mono', monospace;
+            font-size: 2rem;
+            font-weight: 500;
+            text-align: right;
+            outline: none;
+            caret-color: var(--gold);
+        }
+
+        /* ── MODE TOGGLE ── */
+        .mode-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--gray);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .mode-btn:hover, .mode-btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--black);
+        }
+
+        /* ── SCIENTIFIC PANEL ── */
+        .scientific {
+            display: none;
+            margin-bottom: 1rem;
+        }
+        .scientific.active { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+
+        /* ── BUTTON GRID ── */
+        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+
+        /* ── BUTTONS ── */
+        button {
+            height: 52px;
+            font-family: 'DM Mono', monospace;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0;
+        }
+
+        button:hover { background: var(--card); border-color: #444; transform: translateY(-1px); }
+        button:active { transform: translateY(0); opacity: 0.8; }
+
+        .btn-operator {
+            background: #1e1a12;
+            color: var(--gold);
+            border-color: #2a2510;
+        }
+        .btn-operator:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+        .btn-clear {
+            background: #1e1212;
+            color: #e74c3c;
+            border-color: #2a1515;
+        }
+        .btn-clear:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+
+        .btn-equals {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+            font-size: 1.2rem;
+        }
+        .btn-equals:hover { background: var(--gold-light); }
+
+        .btn-sci {
+            background: #121a1e;
+            color: var(--blue);
+            border-color: #152030;
+            font-size: 0.85rem;
+        }
+        .btn-sci:hover { background: var(--blue); color: var(--white); border-color: var(--blue); }
+
+        .btn-zero { grid-column: span 2; }
+
+        .btn-delete {
+            background: #1e1812;
+            color: #e67e22;
+            border-color: #2a2010;
+            font-size: 0.9rem;
+        }
+        .btn-delete:hover { background: #e67e22; color: var(--white); }
+
+        /* ── HISTORY ── */
+        .history {
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+        .history-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 0.6rem;
+        }
+        #historyList {
+            list-style: none;
+            max-height: 90px;
+            overflow-y: auto;
+        }
+        #historyList li {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: #555;
+            padding: 0.2rem 0;
+            border-bottom: 1px solid #1a1a1a;
+            text-align: right;
+        }
+        #historyList li:last-child { color: var(--gray); }
+    </style>
+</head>
+<body>
+
+<p class="page-title">✦ Scientific Calculator</p>
+
+<div class="calculator">
+    <div class="display-wrap">
+        <div class="display-label">Expression</div>
+        <input type="text" id="display" disabled placeholder="0">
+    </div>
+
+    <button class="mode-btn" id="modeBtn" onclick="toggleScientific()">⚗ Scientific Mode</button>
+
+    <!-- Scientific Buttons -->
+    <div class="scientific" id="scientificPanel">
+        <button class="btn-sci" onclick="calculateScientific('sin')">sin</button>
+        <button class="btn-sci" onclick="calculateScientific('cos')">cos</button>
+        <button class="btn-sci" onclick="calculateScientific('tan')">tan</button>
+        <button class="btn-sci" onclick="calculateScientific('sqrt')">√</button>
+        <button class="btn-sci" onclick="calculateScientific('log')">log</button>
+        <button class="btn-sci" onclick="calculateScientific('ln')">ln</button>
+        <button class="btn-sci" onclick="appendValue(Math.PI.toFixed(6))">π</button>
+        <button class="btn-sci" onclick="appendValue('^')">xʸ</button>
+    </div>
+
+    <!-- Basic Buttons -->
+    <div class="buttons">
+        <button class="btn-clear" onclick="clearDisplay()">C</button>
+        <button class="btn-operator" onclick="appendValue('/')">÷</button>
+        <button class="btn-operator" onclick="appendValue('*')">×</button>
+        <button class="btn-delete" onclick="deleteLast()">⌫</button>
+
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button class="btn-operator" onclick="appendValue('-')">−</button>
+
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button class="btn-operator" onclick="appendValue('+')">+</button>
+
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button class="btn-equals" onclick="calculate()">=</button>
+
+        <button class="btn-zero" onclick="appendValue('0')">0</button>
+        <button onclick="appendValue('.')">.</button>
+        <button class="btn-operator" onclick="appendValue('(')">(</button>
+    </div>
+
+    <div class="history">
+        <div class="history-label">History</div>
+        <ul id="historyList"></ul>
+    </div>
+</div>
+
+<script>
+    const history = [];
+
+    function appendValue(value) {
+        const d = document.getElementById("display");
+        d.value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+
+    function deleteLast() {
+        const d = document.getElementById("display");
+        d.value = d.value.slice(0, -1);
+    }
+
+    function calculate() {
+        try {
+            let expression = document.getElementById("display").value;
+            if (!expression) return;
+            const original = expression;
+            expression = expression.replace(/\^/g, "**");
+            let result = Function('"use strict";return (' + expression + ')')();
+            result = parseFloat(result.toFixed(10));
+            addHistory(original + ' = ' + result);
+            document.getElementById("display").value = result;
+        } catch {
+            document.getElementById("display").value = "Error";
+            setTimeout(clearDisplay, 1000);
+        }
+    }
+
+    function calculateScientific(type) {
+        const d = document.getElementById("display");
+        const value = parseFloat(d.value);
+        if (isNaN(value)) { d.value = "Enter number"; setTimeout(clearDisplay, 1000); return; }
+        let result;
+        const original = type + '(' + value + ')';
+        switch(type) {
+            case 'sin':  result = Math.sin(value * Math.PI / 180); break;
+            case 'cos':  result = Math.cos(value * Math.PI / 180); break;
+            case 'tan':  result = Math.tan(value * Math.PI / 180); break;
+            case 'sqrt': result = Math.sqrt(value); break;
+            case 'log':  result = Math.log10(value); break;
+            case 'ln':   result = Math.log(value); break;
+        }
+        result = parseFloat(result.toFixed(10));
+        addHistory(original + ' = ' + result);
+        d.value = result;
+    }
+
+    function toggleScientific() {
+        const panel = document.getElementById("scientificPanel");
+        const btn   = document.getElementById("modeBtn");
+        panel.classList.toggle("active");
+        btn.classList.toggle("active");
+        btn.textContent = panel.classList.contains("active") ? "✕ Close Scientific" : "⚗ Scientific Mode";
+    }
+
+    function addHistory(entry) {
+        history.unshift(entry);
+        if (history.length > 5) history.pop();
+        const list = document.getElementById("historyList");
+        list.innerHTML = history.map(h => `<li>${h}</li>`).join('');
+    }
+</script>
+</body>
+</html>

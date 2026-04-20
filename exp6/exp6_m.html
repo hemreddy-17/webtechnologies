@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register & Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0e0e0e;
+            --white: #faf8f4;
+            --cream: #f5f0e8;
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --gray: #6b6b6b;
+            --light-gray: #e8e4de;
+            --red: #e74c3c;
+            --green: #27ae60;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--black);
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* ── LEFT PANEL ── */
+        .left-panel {
+            background: linear-gradient(145deg, #0e0e0e 0%, #1a1608 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid #1a1a1a;
+        }
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(201,169,110,0.1), transparent 70%);
+            pointer-events: none;
+        }
+        .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        .brand span { color: var(--gold); }
+        .brand-sub {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 3rem;
+        }
+        .left-panel h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .left-panel h2 em { color: var(--gold); font-style: italic; }
+        .left-panel p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            max-width: 340px;
+            position: relative;
+        }
+        .features { list-style: none; margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .features li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #666;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        .features li::before {
+            content: '✦';
+            color: var(--gold);
+            font-size: 0.6rem;
+        }
+
+        /* ── RIGHT PANEL (form area) ── */
+        .right-panel {
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+        }
+
+        .auth-box { width: 100%; max-width: 420px; }
+
+        .form-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 0.4rem;
+        }
+        .form-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── FORM ELEMENTS ── */
+        .form-group { margin-bottom: 1.2rem; }
+        label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 0.45rem;
+        }
+        input[type=text], input[type=email], input[type=password] {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1.5px solid var(--light-gray);
+            background: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--black);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-color: var(--gold); }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .error-msg {
+            font-size: 0.75rem;
+            color: var(--red);
+            margin-top: 0.3rem;
+            display: none;
+        }
+        .error-msg.show { display: block; }
+
+        /* ── PASSWORD STRENGTH ── */
+        .strength-bar {
+            height: 3px;
+            background: var(--light-gray);
+            margin-top: 6px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .strength-fill {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        /* ── SUBMIT BTN ── */
+        .btn-submit {
+            width: 100%;
+            padding: 0.95rem;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+        .btn-submit:hover { background: var(--gold); color: var(--black); }
+
+        /* ── DIVIDER ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            color: var(--light-gray);
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--light-gray);
+        }
+
+        /* ── SWITCH LINK ── */
+        .switch-link {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .switch-link a {
+            color: var(--gold);
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .switch-link a:hover { border-bottom-color: var(--gold); }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            padding: 1rem 1.8rem;
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-left: 4px solid var(--gold);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 9999;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { border-left-color: var(--green); }
+        .toast.error { border-left-color: var(--red); }
+
+        @media (max-width: 768px) {
+            body { grid-template-columns: 1fr; }
+            .left-panel { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LEFT BRANDING -->
+<div class="left-panel">
+    <div class="brand">NEXA<span>CART</span></div>
+    <div class="brand-sub">Premium Clothing Brand</div>
+    <h2>Your Style,<br/><em>Your Identity</em></h2>
+    <p>Join thousands of fashion-forward shoppers who trust NexaCart for curated, premium clothing delivered to their doorstep.</p>
+    <ul class="features">
+        <li>Free shipping on orders above ₹999</li>
+        <li>30-day hassle-free returns</li>
+        <li>Exclusive member-only offers</li>
+        <li>100% ethically sourced fashion</li>
+    </ul>
+</div>
+
+<!-- RIGHT FORM PANEL -->
+<div class="right-panel">
+    <div class="auth-box">
+
+        <!-- REGISTER FORM -->
+        <div id="register">
+            <div class="form-title">Create Account</div>
+            <div class="form-subtitle">Join NexaCart and elevate your wardrobe</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="firstName" placeholder="Hema">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" placeholder="Reddy">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="Hema Reddy">
+                <div class="error-msg" id="nameErr">Name is required.</div>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="email" placeholder="hema@email.com">
+                <div class="error-msg" id="emailErr">Valid email is required.</div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Minimum 6 characters" oninput="checkStrength(this.value)">
+                <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                <div class="error-msg" id="passErr">Password must be at least 6 characters.</div>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirm" placeholder="Re-enter password">
+                <div class="error-msg" id="confirmErr">Passwords do not match.</div>
+            </div>
+
+            <button class="btn-submit" onclick="register()">Create Account →</button>
+            <div class="divider">or</div>
+            <div class="switch-link">Already have an account? <a onclick="showLogin()">Sign in</a></div>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="login" style="display:none;">
+            <div class="form-title">Welcome Back</div>
+            <div class="form-subtitle">Sign in to your NexaCart account</div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="loginEmail" placeholder="hema@email.com">
+                <div class="error-msg" id="loginEmailErr">Valid email is required.</div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Your password">
+                <div class="error-msg" id="loginPassErr">Password is required.</div>
+            </div>
+            <div style="text-align:right;margin-bottom:1.5rem;">
+                <a style="font-size:0.8rem;color:var(--gold);cursor:pointer;">Forgot password?</a>
+            </div>
+
+            <button class="btn-submit" onclick="login()">Sign In →</button>
+            <div class="divider">or</div>
+            <div class="switch-link">Don't have an account? <a onclick="showRegister()">Create one</a></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+    function showLogin()    { document.getElementById("register").style.display="none";  document.getElementById("login").style.display="block"; }
+    function showRegister() { document.getElementById("register").style.display="block"; document.getElementById("login").style.display="none";  }
+
+    function showError(id, show) {
+        document.getElementById(id).classList[show ? 'add' : 'remove']('show');
+    }
+
+    function toast(msg, type='') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast show ' + type;
+        setTimeout(() => t.className = 'toast', 3000);
+    }
+
+    function checkStrength(val) {
+        const fill = document.getElementById('strengthFill');
+        let s = 0;
+        if (val.length >= 6) s++;
+        if (/[A-Z]/.test(val)) s++;
+        if (/[0-9]/.test(val)) s++;
+        if (/[^A-Za-z0-9]/.test(val)) s++;
+        const colors = ['#e74c3c','#e67e22','#f1c40f','#27ae60'];
+        fill.style.width = s > 0 ? (s * 25) + '%' : '0';
+        fill.style.background = colors[s-1] || '#e8e4de';
+    }
+
+    function register() {
+        const name     = document.getElementById("name").value.trim();
+        const email    = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirm  = document.getElementById("confirm").value;
+
+        let valid = true;
+        showError('nameErr',    !name);           if (!name)    valid = false;
+        showError('emailErr',   !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) valid = false;
+        showError('passErr',    password.length < 6);  if (password.length < 6) valid = false;
+        showError('confirmErr', password !== confirm);  if (password !== confirm) valid = false;
+
+        if (!valid) return;
+
+        localStorage.setItem("nc_email", email);
+        localStorage.setItem("nc_password", password);
+        localStorage.setItem("nc_name", name);
+
+        toast('✓ Registration successful! Please sign in.', 'success');
+        setTimeout(showLogin, 1500);
+    }
+
+    function login() {
+        const email    = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        let valid = true;
+        showError('loginEmailErr', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) valid = false;
+        showError('loginPassErr', !password); if (!password) valid = false;
+
+        if (!valid) return;
+
+        const storedEmail    = localStorage.getItem("nc_email");
+        const storedPassword = localStorage.getItem("nc_password");
+        const storedName     = localStorage.getItem("nc_name");
+
+        if (email === storedEmail && password === storedPassword) {
+            toast('✓ Welcome back, ' + storedName + '!', 'success');
+            setTimeout(() => { window.location.href = '../nexacart/index.html'; }, 1500);
+        } else {
+            toast('✗ Invalid email or password.', 'error');
+        }
+    }
+</script>
+</body>
+</html>

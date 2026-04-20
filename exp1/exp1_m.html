@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0e0e0e;
+            --white: #faf8f4;
+            --cream: #f5f0e8;
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --gray: #6b6b6b;
+            --light-gray: #e8e4de;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.7;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(14,14,14,0.96);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            padding: 1.1rem 2rem;
+            z-index: 999;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover { color: var(--gold); }
+        nav a:hover::after { width: 100%; }
+
+        /* ── SECTIONS ── */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 4rem 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        section:nth-child(even) {
+            background: var(--cream);
+            max-width: 100%;
+            padding-left: 50%;
+            padding-right: 4rem;
+        }
+
+        /* ── HOME ── */
+        #home { background: var(--black); color: var(--white); max-width: 100%; padding: 10rem 4rem 4rem; }
+        #home .tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        #home h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        #home h1 em { color: var(--gold); font-style: italic; }
+        #home p { color: #999; font-size: 1.1rem; max-width: 500px; }
+
+        /* ── ABOUT ── */
+        #about { background: var(--white); }
+        .section-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        p { color: var(--gray); margin-bottom: 1rem; font-size: 1rem; }
+
+        /* ── EDUCATION ── */
+        #education { background: var(--black); color: var(--white); max-width: 100%; padding: 6rem 4rem; }
+        #education h2 { color: var(--white); }
+        #education .section-tag { color: var(--gold); }
+
+        .edu-list { list-style: none; margin-top: 2rem; }
+        .edu-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #222;
+        }
+        .edu-list li:last-child { border-bottom: none; }
+        .edu-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: 700;
+            min-width: 40px;
+            line-height: 1;
+        }
+        .edu-text strong {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+        .edu-text span { font-size: 0.875rem; color: #888; }
+
+        /* ── CONTACT ── */
+        #contact { background: var(--cream); max-width: 100%; padding: 6rem 4rem; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+            max-width: 700px;
+        }
+        .contact-item {
+            padding: 2rem;
+            background: var(--white);
+            border-left: 3px solid var(--gold);
+        }
+        .contact-item .icon { font-size: 1.5rem; margin-bottom: 0.8rem; display: block; }
+        .contact-item strong { display: block; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--black); }
+        .contact-item span { font-size: 0.95rem; color: var(--gray); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--black);
+            color: #666;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 7rem 2rem 3rem; }
+            section:nth-child(even) { padding: 4rem 2rem; }
+            #home { padding: 8rem 2rem 3rem; }
+            nav { gap: 1.5rem; padding: 1rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+    <span class="tag">Welcome</span>
+    <h1>Hello,<br/>I'm <em>Hema Reddy</em></h1>
+    <p>A passionate Computer Science student exploring the world of web technologies and modern development.</p>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <span class="section-tag">About Me</span>
+    <h2>Who I Am</h2>
+    <p>My name is <strong>Hema Reddy</strong>. I am a dedicated student with a keen interest in technology and design.</p>
+    <p>I am currently learning HTML, CSS, JavaScript and modern web technologies. I believe in building things that are both functional and beautiful.</p>
+    <p>This website is a reflection of my learning journey and my passion for creating meaningful digital experiences.</p>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+    <span class="section-tag">My Journey</span>
+    <h2>Education</h2>
+    <ul class="edu-list">
+        <li>
+            <span class="edu-num">01</span>
+            <div class="edu-text">
+                <strong>School</strong>
+                <span>Jain School</span>
+            </div>
+        </li>
+        <li>
+            <span class="edu-num">02</span>
+            <div class="edu-text">
+                <strong>College</strong>
+                <span>Jain University</span>
+            </div>
+        </li>
+        <li>
+            <span class="edu-num">03</span>
+            <div class="edu-text">
+                <strong>Course</strong>
+                <span>Computer Science Engineering</span>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <span class="section-tag">Get In Touch</span>
+    <h2>Contact</h2>
+    <div class="contact-grid">
+        <div class="contact-item">
+            <span class="icon">✉️</span>
+            <strong>Email</strong>
+            <span>hema@mail.com</span>
+        </div>
+        <div class="contact-item">
+            <span class="icon">📞</span>
+            <strong>Phone</strong>
+            <span>12345678</span>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>This is a web page using basic HTML tags &nbsp;|&nbsp; © 2026 Hema Reddy</p>
+</footer>
+
+</body>
+</html>

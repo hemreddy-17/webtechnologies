@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart — NexaCart</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav-wrap">
+  <nav class="navbar">
+    <a href="index.html" class="logo">NEXA<span>CART</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="cart.html" class="cart-icon">🛒 <span class="cart-count" id="cartCount">0</span></a>
+      <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+  </nav>
+</header>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <span>Cart</span></div>
+  <h1>Your Cart</h1>
+</div>
+
+<div class="container">
+  <div class="cart-layout">
+
+    <!-- LEFT: CART ITEMS -->
+    <div class="cart-items-wrap">
+      <h2>Cart Items</h2>
+      <div id="cartItemsContainer"></div>
+      <div style="margin-top:2rem;">
+        <a href="products.html" class="btn btn-ghost">← Continue Shopping</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <div id="orderSummary" class="order-summary" style="display:none;">
+      <h3>Order Summary</h3>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="summarySubtotal">₹0</span>
+      </div>
+      <div class="summary-row">
+        <span>Discount</span>
+        <span id="summaryDiscount" style="color:#27ae60;">—</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span id="summaryShipping">₹99</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax (5%)</span>
+        <span id="summaryTax">₹0</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="summaryTotal">₹0</span>
+      </div>
+
+      <div class="coupon-wrap" style="margin-top:1.5rem;">
+        <input type="text" id="couponInput" placeholder="Coupon code" />
+        <button onclick="applyCoupon()">Apply</button>
+      </div>
+      <p id="couponMsg" style="font-size:0.8rem;margin-bottom:1rem;min-height:1.1rem;"></p>
+
+      <button class="btn btn-primary btn-full" onclick="proceedToCheckout()">
+        Proceed to Checkout
+      </button>
+      <p style="text-align:center;font-size:0.75rem;color:var(--gray);margin-top:1rem;">
+        🔒 Secure checkout · Free shipping over ₹999
+      </p>
+      <p style="text-align:center;font-size:0.72rem;color:var(--gold);margin-top:0.3rem;">
+        Coupons: NEXA10 · WELCOME20 · SAVE50
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal"
+     onclick="if(event.target===this) closeCheckout()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <h2 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.4rem;">Checkout</h2>
+    <p style="color:var(--gray);font-size:0.875rem;margin-bottom:2rem;">Enter your delivery details</p>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="chkName" placeholder="Aryan Mehta"/>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="chkEmail" placeholder="you@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>Delivery Address</label>
+      <input type="text" id="chkAddress" placeholder="123 MG Road, Bangalore"/>
+    </div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select id="chkPayment">
+        <option>UPI / QR Code</option>
+        <option>Credit / Debit Card</option>
+        <option>Cash on Delivery</option>
+        <option>Net Banking</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="placeOrder()">Place Order 🎉</button>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box" style="text-align:center;">
+    <div style="font-size:4rem;margin-bottom:1rem;">🎉</div>
+    <h2 style="font-family:var(--font-display);font-size:2rem;margin-bottom:0.5rem;">Order Placed!</h2>
+    <p style="color:var(--gray);margin-bottom:2rem;">
+      Thank you for shopping at NexaCart.<br/>
+      Your order will arrive in 3–5 business days.
+    </p>
+    <a href="products.html" class="btn btn-primary"
+       onclick="document.getElementById('successModal').classList.remove('open')">
+      Continue Shopping
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom" style="border:none;">
+    <p>© 2026 NexaCart. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+
+  /* ── discount state ─────────────────────────── */
+  let discountPercent = 0;
+
+  /* ── draw the cart ──────────────────────────── */
+  function drawCart() {
+    const cart      = getCart();
+    const container = document.getElementById('cartItemsContainer');
+    const summary   = document.getElementById('orderSummary');
+
+    /* empty state */
+    if (!cart || cart.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="big-icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Looks like you haven't added anything yet.</p>
+          <a href="products.html" class="btn btn-primary" style="margin-top:1.2rem;">
+            Shop Now
+          </a>
+        </div>`;
+      summary.style.display = 'none';
+      return;
+    }
+
+    summary.style.display = 'block';
+
+    /* render items */
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <img class="cart-item-img"
+             src="${item.img}"
+             alt="${item.name}"
+             onerror="this.src='https://via.placeholder.com/100x130?text=NexaCart'" />
+        <div>
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-meta">
+            Size: <strong>${item.size}</strong>
+            &nbsp;|&nbsp;
+            ₹${item.price.toLocaleString('en-IN')} each
+          </div>
+          <div class="qty-control" style="margin-top:0.6rem;">
+            <button class="qty-btn"
+              onclick="changeQty(${item.id}, '${item.size}', -1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn"
+              onclick="changeQty(${item.id}, '${item.size}', 1)">+</button>
+          </div>
+          <button class="remove-btn" style="margin-top:0.5rem;"
+            onclick="deleteItem(${item.id}, '${item.size}')">
+            Remove
+          </button>
+        </div>
+        <div style="font-weight:600;font-size:1.05rem;white-space:nowrap;padding-top:0.3rem;">
+          ₹${(item.price * item.qty).toLocaleString('en-IN')}
+        </div>
+      </div>`
+    ).join('');
+
+    calcSummary();
+  }
+
+  /* ── calculate totals ───────────────────────── */
+  function calcSummary() {
+    const subtotal  = getCartTotal();
+    const discount  = Math.round(subtotal * discountPercent);
+    const afterDisc = subtotal - discount;
+    const shipping  = afterDisc >= 999 ? 0 : 99;
+    const tax       = Math.round(afterDisc * 0.05);
+    const total     = afterDisc + shipping + tax;
+
+    document.getElementById('summarySubtotal').textContent =
+      `₹${subtotal.toLocaleString('en-IN')}`;
+
+    const discEl = document.getElementById('summaryDiscount');
+    discEl.textContent = discount > 0
+      ? `− ₹${discount.toLocaleString('en-IN')}`
+      : '—';
+
+    document.getElementById('summaryShipping').textContent =
+      shipping === 0 ? 'Free 🎉' : `₹${shipping}`;
+
+    document.getElementById('summaryTax').textContent =
+      `₹${tax.toLocaleString('en-IN')}`;
+
+    document.getElementById('summaryTotal').textContent =
+      `₹${total.toLocaleString('en-IN')}`;
+  }
+
+  /* ── qty change ─────────────────────────────── */
+  function changeQty(id, size, delta) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id && i.size === size);
+    if (!item) return;
+    item.qty = Math.max(1, item.qty + delta);
+    saveCart(cart);
+    drawCart();
+  }
+
+  /* ── remove item ────────────────────────────── */
+  function deleteItem(id, size) {
+    const cart = getCart().filter(i => !(i.id === id && i.size === size));
+    saveCart(cart);
+    drawCart();
+    showToast('Item removed from cart.');
+  }
+
+  /* ── coupon ─────────────────────────────────── */
+  const COUPONS = { NEXA10: 0.10, WELCOME20: 0.20, SAVE50: 0.50 };
+
+  function applyCoupon() {
+    const code = document.getElementById('couponInput').value.trim().toUpperCase();
+    const msg  = document.getElementById('couponMsg');
+    if (COUPONS[code]) {
+      discountPercent  = COUPONS[code];
+      msg.style.color  = '#27ae60';
+      msg.textContent  = `✓ "${code}" applied — ${COUPONS[code] * 100}% off!`;
+      calcSummary();
+      showToast(`Coupon ${code} applied!`);
+    } else {
+      discountPercent  = 0;
+      msg.style.color  = '#e74c3c';
+      msg.textContent  = 'Invalid coupon code. Try NEXA10.';
+      calcSummary();
+    }
+  }
+
+  /* ── checkout ───────────────────────────────── */
+  function proceedToCheckout() {
+    if (getCart().length === 0) { showToast('Your cart is empty!'); return; }
+    document.getElementById('checkoutModal').classList.add('open');
+  }
+
+  function closeCheckout() {
+    document.getElementById('checkoutModal').classList.remove('open');
+  }
+
+  function placeOrder() {
+    const name    = document.getElementById('chkName').value.trim();
+    const email   = document.getElementById('chkEmail').value.trim();
+    const address = document.getElementById('chkAddress').value.trim();
+    if (!name || !email || !address) {
+      showToast('Please fill in all fields.');
+      return;
+    }
+    closeCheckout();
+    saveCart([]);
+    discountPercent = 0;
+    drawCart();
+    setTimeout(() => {
+      document.getElementById('successModal').classList.add('open');
+    }, 300);
+  }
+
+  /* ── init ───────────────────────────────────── */
+  drawCart();
+
+</script>
+</body>
+</html>

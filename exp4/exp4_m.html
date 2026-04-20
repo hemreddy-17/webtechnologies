@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Hema Online Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+    --black: #0e0e0e;
+    --white: #faf8f4;
+    --cream: #f5f0e8;
+    --gold: #c9a96e;
+    --light-gray: #e8e4de;
+    --gray: #6b6b6b;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.6;
+}
+
+/* ── HEADER ── */
+header {
+    background: linear-gradient(135deg, #0e0e0e 0%, #1a1a2e 100%);
+    color: var(--white);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+header h1 .highlight { color: var(--gold); }
+header h3 {
+    color: #888;
+    font-weight: 300;
+    font-size: 0.9rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+/* ── NAV ── */
+nav {
+    background: #0e0e0e;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+nav a {
+    color: #888;
+    text-decoration: none;
+    padding: 1rem 1.8rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+}
+nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── MARQUEE ── */
+.offer-bar {
+    background: var(--gold);
+    padding: 0.65rem 1rem;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+}
+
+/* ── SECTION ── */
+section { padding: 5rem 2rem; }
+.inner { max-width: 1200px; margin: 0 auto; }
+.section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+}
+h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    margin-bottom: 0.5rem;
+}
+.divider {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 1rem 0 2.5rem;
+}
+
+/* ── HOME ── */
+#home { background: var(--white); }
+#home p { color: var(--gray); font-size: 1.05rem; max-width: 550px; }
+
+/* ── PRODUCTS ── */
+#products { background: var(--cream); }
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+.product {
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.product:hover { transform: translateY(-6px); box-shadow: 0 16px 50px rgba(0,0,0,0.1); }
+
+.product-thumb {
+    height: 280px;
+    background: #f0ece4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    position: relative;
+}
+.badge {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.product-info { padding: 1.5rem; }
+.product-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+}
+.product-info p { font-size: 0.875rem; color: var(--gray); margin-bottom: 1rem; }
+.price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--black);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+button {
+    background: var(--black);
+    color: var(--white);
+    padding: 0.8rem 1.5rem;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+button:hover { background: var(--gold); color: var(--black); }
+
+/* ── OFFERS ── */
+#offers { background: var(--black); color: var(--white); }
+#offers h2 { color: var(--white); }
+#offers .section-label { color: var(--gold); }
+
+details {
+    border: 1px solid #222;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    background: #111;
+    transition: border-color 0.3s;
+}
+details:hover { border-color: var(--gold); }
+summary {
+    font-weight: 500;
+    color: var(--white);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+summary::after { content: '+'; color: var(--gold); font-size: 1.2rem; }
+details[open] summary::after { content: '−'; }
+details p { margin-top: 0.8rem; color: #888; font-size: 0.875rem; }
+
+.media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+.media-card { background: #111; padding: 1.5rem; border: 1px solid #222; }
+.media-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 1rem; }
+video, audio { width: 100%; border: none; outline: none; }
+
+/* ── CONTACT ── */
+#contact { background: var(--cream); }
+form {
+    background: var(--white);
+    padding: 2.5rem;
+    max-width: 560px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+}
+.form-group { margin-bottom: 1.3rem; }
+label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+}
+input[type=text], input[type=email], input[type=tel],
+input[type=date], textarea, select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid var(--light-gray);
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.3s;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+textarea { resize: vertical; min-height: 100px; }
+
+.radio-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.radio-row label {
+    font-size: 0.875rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-weight: 400;
+}
+input[type=radio] { accent-color: var(--gold); width: auto; }
+
+.btn-row { display: flex; gap: 1rem; margin-top: 1.5rem; }
+input[type=submit] {
+    flex: 2;
+    padding: 0.9rem;
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+input[type=submit]:hover { background: var(--gold); color: var(--black); }
+input[type=reset] {
+    flex: 1;
+    padding: 0.9rem;
+    background: transparent;
+    color: var(--gray);
+    border: 1.5px solid var(--light-gray);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+input[type=reset]:hover { border-color: var(--black); color: var(--black); }
+
+/* ── FOOTER ── */
+footer {
+    background: var(--black);
+    color: #444;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    .media-grid { grid-template-columns: 1fr; }
+    nav { flex-wrap: wrap; }
+    nav a { padding: 0.8rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🛒 HEMA <span class="highlight">ONLINE</span> STORE</h1>
+    <h3>Your Favourite Shopping Place</h3>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#offers">Offers</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<div class="offer-bar">🔥 Mega Sale Today — Up to 50% OFF on All Products 🔥</div>
+
+<section id="home">
+    <div class="inner">
+        <span class="section-label">Welcome</span>
+        <h2>Welcome to Our Store</h2>
+        <div class="divider"></div>
+        <p>We provide high quality products at affordable prices. Shop the latest trends with confidence and style.</p>
+    </div>
+</section>
+
+<section id="products">
+    <div class="inner">
+        <span class="section-label">Collection</span>
+        <h2>Our Products</h2>
+        <div class="divider"></div>
+        <div class="product-grid">
+            <div class="product">
+                <div class="product-thumb">
+                    <span class="badge">Popular</span>
+                    👕
+                </div>
+                <div class="product-info">
+                    <h3>T-Shirt</h3>
+                    <p>Cotton casual T-Shirt for everyday comfort</p>
+                    <span class="price">₹499</span>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-thumb">
+                    <span class="badge">New</span>
+                    👟
+                </div>
+                <div class="product-info">
+                    <h3>Shoes</h3>
+                    <p>Comfort running shoes built for performance</p>
+                    <span class="price">₹1,299</span>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+            <div class="product">
+                <div class="product-thumb">
+                    <span class="badge">Sale</span>
+                    ⌚
+                </div>
+                <div class="product-info">
+                    <h3>Watch</h3>
+                    <p>Water resistant watch with premium finish</p>
+                    <span class="price">₹999</span>
+                    <button>Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="offers">
+    <div class="inner">
+        <span class="section-label">Deals</span>
+        <h2>Special Offers</h2>
+        <div class="divider"></div>
+        <details>
+            <summary>Buy 2 Items — Get 10% Extra Off</summary>
+            <p>Buy any 2 items and get 10% extra discount automatically applied at checkout!</p>
+        </details>
+        <details>
+            <summary>Free Shipping on Orders ₹999+</summary>
+            <p>Enjoy free delivery on all orders above ₹999. No coupon code required.</p>
+        </details>
+        <div class="media-grid">
+            <div class="media-card">
+                <h3>📹 Product Demo Video</h3>
+                <video controls><source src="sample.mp4" type="video/mp4">Video not available.</video>
+            </div>
+            <div class="media-card">
+                <h3>🎵 Store Music</h3>
+                <audio controls><source src="sample.mp3" type="audio/mpeg">Audio not available.</audio>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="inner">
+        <span class="section-label">Reach Us</span>
+        <h2>Contact Us</h2>
+        <div class="divider"></div>
+        <form>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" required placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" required placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="+91 00000 00000">
+            </div>
+            <div class="form-group">
+                <label>Delivery Address</label>
+                <textarea rows="3" placeholder="Your full address"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Select Product</label>
+                <select>
+                    <option>T-Shirt</option>
+                    <option>Shoes</option>
+                    <option>Watch</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <div class="radio-row">
+                    <label><input type="radio" name="pay"> Cash on Delivery</label>
+                    <label><input type="radio" name="pay"> UPI</label>
+                    <label><input type="radio" name="pay"> Card</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Preferred Delivery Date</label>
+                <input type="date">
+            </div>
+            <div class="btn-row">
+                <input type="submit" value="Place Order →">
+                <input type="reset" value="Clear">
+            </div>
+        </form>
+    </div>
+</section>
+
+<footer>© 2026 Hema Online Store &nbsp;|&nbsp; All Rights Reserved</footer>
+
+</body>
+</html>

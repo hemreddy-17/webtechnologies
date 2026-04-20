@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — NexaCart</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav-wrap">
+  <nav class="navbar">
+    <a href="index.html" class="logo">NEXA<span>CART</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="cart.html" class="cart-icon">🛒 <span class="cart-count" id="cartCount">0</span></a>
+      <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+  </nav>
+</header>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <span>Contact</span></div>
+  <h1>Get in Touch</h1>
+  <p>We'd love to hear from you. Reach out any time.</p>
+</div>
+
+<div class="container">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h2>Let's Talk</h2>
+      <p>Whether you have a question about an order, a product, or just want to say hello — our team is here for you, Monday to Saturday, 9am to 6pm IST.</p>
+
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div>
+          <h4>Visit Us</h4>
+          <p>NexaCart HQ, 12 Fashion Street,<br/>Bandra West, Mumbai 400050</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📞</div>
+        <div>
+          <h4>Call Us</h4>
+          <p>+91 98765 43210</p>
+          <p>Mon–Sat, 9am–6pm IST</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✉️</div>
+        <div>
+          <h4>Email Us</h4>
+          <p>hello@nexacart.in</p>
+          <p>support@nexacart.in</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">💬</div>
+        <div>
+          <h4>Social Media</h4>
+          <p>@nexacart on Instagram & Facebook</p>
+        </div>
+      </div>
+
+      <!-- MAP PLACEHOLDER -->
+      <div style="margin-top:2rem;background:var(--cream);padding:2rem;border-left:3px solid var(--gold);">
+        <p style="font-family:var(--font-display);font-size:1.1rem;color:var(--black);">📍 Bandra West, Mumbai</p>
+        <p style="font-size:0.875rem;color:var(--gray);margin-top:0.5rem;">Google Maps integration available in the PHP-hosted version.</p>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <h3>Send a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="ctName">Your Name *</label>
+          <input type="text" id="ctName" placeholder="Priya Sharma"/>
+          <div class="form-error" id="ctNameErr">Name is required.</div>
+        </div>
+        <div class="form-group">
+          <label for="ctEmail">Email Address *</label>
+          <input type="email" id="ctEmail" placeholder="you@email.com"/>
+          <div class="form-error" id="ctEmailErr">Valid email required.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ctSubject">Subject *</label>
+        <select id="ctSubject">
+          <option value="">— Select a topic —</option>
+          <option>Order Inquiry</option>
+          <option>Product Question</option>
+          <option>Return / Exchange</option>
+          <option>Wholesale / Business</option>
+          <option>Other</option>
+        </select>
+        <div class="form-error" id="ctSubjectErr">Please select a subject.</div>
+      </div>
+      <div class="form-group">
+        <label for="ctMessage">Message *</label>
+        <textarea id="ctMessage" placeholder="Tell us how we can help you..."></textarea>
+        <div class="form-error" id="ctMsgErr">Message must be at least 20 characters.</div>
+      </div>
+
+      <!-- Honeypot field (spam protection) -->
+      <input type="text" id="ctHoneypot" style="display:none;" tabindex="-1" autocomplete="off"/>
+
+      <button class="btn btn-primary btn-full" onclick="submitContactForm()">Send Message →</button>
+
+      <div id="successMsg">
+        ✓ Thank you! We've received your message and will get back to you within 24 hours.
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <section style="padding:5rem 0;">
+    <div class="section-header"><h2>Frequently Asked Questions</h2></div>
+    <div id="faqList"></div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><div class="logo">NEXA<span>CART</span></div><p>Premium fashion for the modern wardrobe.</p></div>
+    <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="products.html">Shop</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-links"><h4>Support</h4><ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul></div>
+    <div class="footer-newsletter"><h4>Newsletter</h4><p>Get exclusive deals.</p><div class="newsletter-form"><input type="email" placeholder="Email"/><button>→</button></div></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 NexaCart. All rights reserved.</p></div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  // FAQ Data
+  const FAQS = [
+    { q: "How long does delivery take?", a: "Standard delivery takes 3–5 business days. Express delivery (1–2 days) is available at checkout for an additional fee." },
+    { q: "What is your return policy?", a: "We accept returns within 30 days of delivery for items in original condition with tags attached. Simply raise a return request via your account dashboard." },
+    { q: "Do you offer size exchanges?", a: "Yes! If the size doesn't fit, we'll exchange it free of charge within 15 days. Contact us and we'll arrange a pickup." },
+    { q: "Are your products ethically made?", a: "Absolutely. All NexaCart garments are produced in certified facilities with fair wages, safe conditions, and eco-friendly processes." },
+    { q: "Can I track my order?", a: "Yes, once your order ships you'll receive a tracking link via email and SMS. You can also track orders from your account page." },
+  ];
+
+  function renderFAQs() {
+    const container = document.getElementById('faqList');
+    container.innerHTML = FAQS.map((f, i) => `
+      <div style="border-bottom:1px solid var(--light-gray);">
+        <button onclick="toggleFAQ(${i})" style="width:100%;text-align:left;padding:1.2rem 0;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:1rem;font-weight:500;color:var(--black);">
+          ${f.q} <span id="faqIcon${i}" style="font-size:1.2rem;color:var(--gold);transition:transform 0.3s;">+</span>
+        </button>
+        <div id="faqAnswer${i}" style="display:none;padding:0 0 1.2rem;color:var(--gray);font-size:0.9rem;line-height:1.7;">${f.a}</div>
+      </div>
+    `).join('');
+  }
+
+  function toggleFAQ(i) {
+    const ans = document.getElementById(`faqAnswer${i}`);
+    const icon = document.getElementById(`faqIcon${i}`);
+    const isOpen = ans.style.display === 'block';
+    // Close all
+    FAQS.forEach((_, j) => {
+      document.getElementById(`faqAnswer${j}`).style.display = 'none';
+      document.getElementById(`faqIcon${j}`).textContent = '+';
+    });
+    if (!isOpen) {
+      ans.style.display = 'block';
+      icon.textContent = '−';
+    }
+  }
+
+  function submitContactForm() {
+    let valid = true;
+    const name = document.getElementById('ctName').value.trim();
+    const email = document.getElementById('ctEmail').value.trim();
+    const subject = document.getElementById('ctSubject').value;
+    const msg = document.getElementById('ctMessage').value.trim();
+    const honeypot = document.getElementById('ctHoneypot').value;
+
+    // Bot check
+    if (honeypot) return;
+
+    const show = (id, bool) => {
+      const el = document.getElementById(id);
+      el && el.classList[bool ? 'add' : 'remove']('show');
+    };
+
+    show('ctNameErr', !name);
+    show('ctEmailErr', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+    show('ctSubjectErr', !subject);
+    show('ctMsgErr', msg.length < 20);
+
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !subject || msg.length < 20) return;
+
+    // Simulate submission — PHP would: POST to contact.php, send email, store in DB
+    const successMsg = document.getElementById('successMsg');
+    successMsg.style.display = 'block';
+    ['ctName','ctEmail','ctMessage'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ctSubject').value = '';
+    showToast('Message sent!');
+  }
+
+  renderFAQs();
+</script>
+</body>
+</html>

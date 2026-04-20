@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexaCart — Premium Clothing</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav-wrap">
+  <nav class="navbar">
+    <a href="index.html" class="logo">NEXA<span>CART</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="cart.html" class="cart-icon">🛒 <span class="cart-count" id="cartCount">0</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tag">New Season 2026</p>
+    <h1 class="hero-title">Dress<br/><em>Beyond</em><br/>Ordinary.</h1>
+    <p class="hero-sub">Curated fashion for the modern wardrobe. Timeless pieces, contemporary silhouettes.</p>
+    <div class="hero-btns">
+      <a href="products.html" class="btn btn-primary">Shop Now</a>
+      <a href="about.html" class="btn btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-img-wrap">
+    <div class="hero-img-box">
+      <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80" alt="Fashion Model" />
+    </div>
+    <div class="floating-badge">New In</div>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Free Shipping Over ₹999</span><span>•</span>
+    <span>New Arrivals Weekly</span><span>•</span>
+    <span>Easy 30-Day Returns</span><span>•</span>
+    <span>Sustainable Fashion</span><span>•</span>
+    <span>Free Shipping Over ₹999</span><span>•</span>
+    <span>New Arrivals Weekly</span><span>•</span>
+    <span>Easy 30-Day Returns</span><span>•</span>
+    <span>Sustainable Fashion</span><span>•</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section categories-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+      <p>Explore our curated collections</p>
+    </div>
+    <div class="categories-grid">
+      <a href="products.html?cat=women" class="cat-card cat-women">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=500&q=80" alt="Women"/>
+        <div class="cat-label">Women</div>
+      </a>
+      <a href="products.html?cat=men" class="cat-card cat-men">
+        <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=500&q=80" alt="Men"/>
+        <div class="cat-label">Men</div>
+      </a>
+      <a href="products.html?cat=accessories" class="cat-card cat-accessories">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80" alt="Accessories"/>
+        <div class="cat-label">Accessories</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section featured-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Pieces</h2>
+      <a href="products.html" class="view-all">View All →</a>
+    </div>
+    <div class="products-grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="promo-banner">
+  <div class="promo-inner">
+    <div class="promo-text">
+      <h2>Summer Sale</h2>
+      <p class="promo-disc">Up to <strong>50% OFF</strong> select styles.</p>
+      <a href="products.html" class="btn btn-light">Shop Sale</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>What Our Customers Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Absolutely love the quality. NexaCart is my go-to for every season update!"</p>
+        <span class="testi-name">— Priya S., Mumbai</span>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Fast delivery, beautiful packaging, and the clothes fit perfectly. Highly recommend."</p>
+        <span class="testi-name">— Aryan M., Delhi</span>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★☆</div>
+        <p>"Great range of styles. The linen shirts are chef's kiss. Will definitely order again."</p>
+        <span class="testi-name">— Sneha R., Bangalore</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="logo">NEXA<span>CART</span></div>
+      <p>Elevating everyday fashion with quality, comfort, and contemporary style since 2023.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-newsletter">
+      <h4>Stay in Style</h4>
+      <p>Get new arrivals and exclusive deals.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="your@email.com" id="nlEmail"/>
+        <button onclick="subscribeNewsletter()">→</button>
+      </div>
+      <p id="nlMsg" style="color:#c9a96e;font-size:0.8rem;margin-top:0.4rem;"></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NexaCart. All rights reserved. | Designed for 23CSE404 Capstone Project</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  renderFeaturedProducts();
+
+  function subscribeNewsletter() {
+    const email = document.getElementById('nlEmail').value;
+    const msg = document.getElementById('nlMsg');
+    if (!email || !email.includes('@')) {
+      msg.textContent = 'Please enter a valid email.';
+      msg.style.color = '#e74c3c';
+    } else {
+      msg.textContent = '✓ Subscribed! Welcome to NexaCart.';
+      msg.style.color = '#c9a96e';
+      document.getElementById('nlEmail').value = '';
+    }
+  }
+</script>
+</body>
+</html>

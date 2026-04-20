@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop — NexaCart</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="nav-wrap">
+  <nav class="navbar">
+    <a href="index.html" class="logo">NEXA<span>CART</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Shop</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html">Login</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="cart.html" class="cart-icon">🛒 <span class="cart-count" id="cartCount">0</span></a>
+      <button class="hamburger" id="hamburger">&#9776;</button>
+    </div>
+  </nav>
+</header>
+
+<div class="page-header">
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <span>Shop</span></div>
+  <h1>Our Collection</h1>
+  <p>Discover timeless pieces crafted for everyday elegance.</p>
+</div>
+
+<div class="container">
+  <div class="shop-layout">
+    <!-- SIDEBAR FILTERS -->
+    <aside class="filters-sidebar">
+      <div class="filter-group">
+        <h3>Search</h3>
+        <input class="form-group input" type="text" id="searchInput" placeholder="Search products…" style="width:100%;padding:0.7rem 0.9rem;border:1.5px solid #e8e4de;font-family:var(--font-body);font-size:0.9rem;outline:none;" oninput="filterProducts()" />
+      </div>
+      <div class="filter-group">
+        <h3>Category</h3>
+        <select id="categoryFilter" style="width:100%;padding:0.7rem;border:1.5px solid #e8e4de;font-family:var(--font-body);font-size:0.9rem;outline:none;cursor:pointer;" onchange="filterProducts()">
+          <option value="">All Categories</option>
+          <option value="Women">Women</option>
+          <option value="Men">Men</option>
+          <option value="Accessories">Accessories</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <h3>Price Range</h3>
+        <input type="range" id="priceRange" class="price-range" min="500" max="9999" value="9999" step="100" oninput="updatePriceLabel(); filterProducts()"/>
+        <div class="price-labels">
+          <span>₹500</span>
+          <span id="priceLabel">₹9,999</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>Tags</h3>
+        <div class="filter-options">
+          <label class="filter-option"><input type="checkbox" value="shirt" onchange="filterByTag()"/> Shirts</label>
+          <label class="filter-option"><input type="checkbox" value="dress" onchange="filterByTag()"/> Dresses</label>
+          <label class="filter-option"><input type="checkbox" value="pants" onchange="filterByTag()"/> Pants</label>
+          <label class="filter-option"><input type="checkbox" value="jacket" onchange="filterByTag()"/> Jackets</label>
+          <label class="filter-option"><input type="checkbox" value="bags" onchange="filterByTag()"/> Bags</label>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-full" onclick="resetFilters()">Clear Filters</button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div>
+      <div class="shop-toolbar">
+        <span class="result-count" id="resultCount">12 products</span>
+        <select id="sortSelect" onchange="filterProducts()">
+          <option value="">Sort: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+      <div class="products-grid" id="allProductsGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;">
+      <img id="modalImg" src="" alt="" style="width:100%;aspect-ratio:3/4;object-fit:cover;"/>
+      <div>
+        <p id="modalCategory" style="font-size:0.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;"></p>
+        <h2 id="modalName" style="font-family:var(--font-display);font-size:1.6rem;margin-bottom:0.8rem;"></h2>
+        <div style="display:flex;gap:0.8rem;align-items:center;margin-bottom:1.5rem;">
+          <span id="modalPrice" style="font-size:1.2rem;font-weight:600;"></span>
+          <span id="modalOriginalPrice" style="font-size:0.95rem;color:var(--gray);text-decoration:line-through;"></span>
+        </div>
+        <div class="form-group" style="margin-bottom:1.2rem;">
+          <label style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:600;display:block;margin-bottom:0.5rem;">Size</label>
+          <select id="modalSize" style="width:100%;padding:0.7rem;border:1.5px solid var(--light-gray);font-family:var(--font-body);outline:none;">
+            <option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option>
+          </select>
+        </div>
+        <button id="modalAddBtn" class="btn btn-primary btn-full">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="logo">NEXA<span>CART</span></div>
+      <p>Premium fashion, curated for your wardrobe.</p>
+    </div>
+    <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="products.html">Shop</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-links"><h4>Support</h4><ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Size Guide</a></li></ul></div>
+    <div class="footer-newsletter"><h4>Newsletter</h4><p>Get exclusive deals.</p><div class="newsletter-form"><input type="email" placeholder="Email"/><button>→</button></div></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 NexaCart. All rights reserved.</p></div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  renderAllProducts();
+
+  function updatePriceLabel() {
+    const val = document.getElementById('priceRange').value;
+    document.getElementById('priceLabel').textContent = `₹${parseInt(val).toLocaleString('en-IN')}`;
+  }
+
+  function filterByTag() {
+    const checked = [...document.querySelectorAll('.filter-option input:checked')].map(i => i.value);
+    if (checked.length === 0) { filterProducts(); return; }
+    const filtered = PRODUCTS.filter(p => checked.some(tag => p.tags.includes(tag)));
+    renderAllProducts(filtered);
+  }
+
+  function resetFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('categoryFilter').value = '';
+    document.getElementById('sortSelect').value = '';
+    document.getElementById('priceRange').value = 9999;
+    updatePriceLabel();
+    document.querySelectorAll('.filter-option input').forEach(cb => cb.checked = false);
+    renderAllProducts();
+  }
+
+  // Read URL param for category
+  const urlParams = new URLSearchParams(window.location.search);
+  const catParam = urlParams.get('cat');
+  if (catParam) {
+    const catMap = { women: 'Women', men: 'Men', accessories: 'Accessories' };
+    const catSelect = document.getElementById('categoryFilter');
+    if (catMap[catParam]) { catSelect.value = catMap[catParam]; filterProducts(); }
+  }
+</script>
+</body>
+</html>

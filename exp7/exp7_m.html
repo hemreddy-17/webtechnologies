@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JavaScript Event Handling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0e0e0e;
+            --dark: #141414;
+            --panel: #1a1a1a;
+            --border: #252525;
+            --white: #faf8f4;
+            --cream: #f5f0e8;
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --gray: #6b6b6b;
+            --light-gray: #e8e4de;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            background: var(--black);
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+        }
+        .page-header .tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .page-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 600;
+            color: var(--white);
+        }
+        .page-header p { color: #666; margin-top: 0.8rem; font-size: 0.9rem; }
+
+        /* ── MAIN LAYOUT ── */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem 6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* ── DEMO CARD ── */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            padding: 2.5rem;
+            transition: box-shadow 0.3s;
+        }
+        .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+        .card-full { grid-column: 1 / -1; }
+
+        .card-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+        .card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .card p.desc {
+            font-size: 0.82rem;
+            color: var(--gray);
+            margin-bottom: 1.8rem;
+            line-height: 1.6;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin: 0.8rem 0 1.5rem;
+        }
+
+        /* ── CLICK EVENT ── */
+        .demo-btn {
+            padding: 0.9rem 2rem;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+        }
+        .demo-btn:hover { background: var(--gold); color: var(--black); }
+
+        .click-count {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background: var(--cream);
+            border-left: 3px solid var(--gold);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        .click-count span { color: var(--black); font-weight: 600; font-size: 1.1rem; }
+
+        /* ── MOUSE EVENT ── */
+        #box {
+            width: 100%;
+            height: 130px;
+            background: var(--cream);
+            border: 2px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.1em;
+            user-select: none;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+        }
+        .swatch {
+            flex: 1;
+            height: 36px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 2px;
+        }
+        .swatch:hover { transform: scale(1.05); }
+        .swatch.active { border-color: var(--black); }
+
+        /* ── KEYBOARD EVENT ── */
+        .kb-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1.5px solid var(--light-gray);
+            background: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            color: var(--black);
+        }
+        .kb-input:focus { border-color: var(--gold); }
+
+        .live-output {
+            margin-top: 1.2rem;
+            background: var(--black);
+            padding: 1.2rem;
+            min-height: 60px;
+        }
+        .live-output .live-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 0.5rem;
+        }
+        #output {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            min-height: 1.5rem;
+        }
+
+        .char-counter {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.6rem;
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* ── DOUBLE CLICK EVENT ── */
+        #dblBox {
+            width: 100%;
+            height: 120px;
+            background: var(--cream);
+            border: 2px dashed var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.4s;
+            user-select: none;
+            letter-spacing: 0.08em;
+        }
+
+        /* ── DRAG EVENT ── */
+        #dragItem {
+            width: 90px;
+            height: 90px;
+            background: var(--black);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: grab;
+            transition: transform 0.1s;
+            user-select: none;
+        }
+        #dragItem:active { cursor: grabbing; transform: scale(1.05); }
+        #dropZone {
+            flex: 1;
+            height: 90px;
+            border: 2px dashed var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--gray);
+            transition: all 0.3s;
+            margin-left: 1.5rem;
+        }
+        #dropZone.drag-over { border-color: var(--gold); background: rgba(201,169,110,0.05); color: var(--gold); }
+        .drag-wrap { display: flex; align-items: center; }
+
+        /* ── EVENT LOG ── */
+        .event-log {
+            background: var(--black);
+            padding: 1.5rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .log-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 0.8rem;
+        }
+        #eventLog { list-style: none; }
+        #eventLog li {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.78rem;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            gap: 1rem;
+        }
+        .log-time { color: var(--gold); min-width: 55px; }
+        .log-msg { color: #888; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--black);
+            color: #333;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            main { grid-template-columns: 1fr; }
+            .card-full { grid-column: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <span class="tag">Experiment 7</span>
+    <h1>JavaScript Event Handling</h1>
+    <p>Demonstrating click, mouse, keyboard, drag & drop events</p>
+</div>
+
+<main>
+
+    <!-- 1. CLICK EVENT -->
+    <div class="card">
+        <span class="card-label">Event 01</span>
+        <h2>Click Event</h2>
+        <div class="divider"></div>
+        <p class="desc">Fires every time the button is clicked. Tracks total click count using a counter variable.</p>
+        <button class="demo-btn" onclick="handleClick()">Click Me</button>
+        <div class="click-count">
+            Clicked <span id="clickNum">0</span> times
+        </div>
+    </div>
+
+    <!-- 2. MOUSE EVENT -->
+    <div class="card">
+        <span class="card-label">Event 02</span>
+        <h2>Mouse Events</h2>
+        <div class="divider"></div>
+        <p class="desc">Hover over the box to change its colour. Click a swatch to lock the colour.</p>
+        <div id="box"
+             onmouseover="changeColor()"
+             onmouseout="resetColor()">
+            Hover Over Me
+        </div>
+        <div class="color-swatches" id="swatches">
+            <div class="swatch" style="background:#c9a96e;" onclick="lockColor('#c9a96e', this)" title="Gold"></div>
+            <div class="swatch" style="background:#3498db;" onclick="lockColor('#3498db', this)" title="Blue"></div>
+            <div class="swatch" style="background:#e74c3c;" onclick="lockColor('#e74c3c', this)" title="Red"></div>
+            <div class="swatch" style="background:#2ecc71;" onclick="lockColor('#2ecc71', this)" title="Green"></div>
+            <div class="swatch" style="background:#9b59b6;" onclick="lockColor('#9b59b6', this)" title="Purple"></div>
+        </div>
+    </div>
+
+    <!-- 3. KEYBOARD EVENT -->
+    <div class="card">
+        <span class="card-label">Event 03</span>
+        <h2>Keyboard Event</h2>
+        <div class="divider"></div>
+        <p class="desc">Fires on every keypress (onkeyup). Live preview updates as you type.</p>
+        <input class="kb-input" type="text" placeholder="Type something here..." onkeyup="showText(this)">
+        <div class="live-output">
+            <div class="live-label">Live Preview</div>
+            <div id="output">&nbsp;</div>
+        </div>
+        <div class="char-counter">
+            <span id="charMsg">0 characters</span>
+            <span id="wordMsg">0 words</span>
+        </div>
+    </div>
+
+    <!-- 4. DOUBLE CLICK EVENT -->
+    <div class="card">
+        <span class="card-label">Event 04</span>
+        <h2>Double Click Event</h2>
+        <div class="divider"></div>
+        <p class="desc">The ondblclick event fires when the element is double-clicked rapidly.</p>
+        <div id="dblBox" ondblclick="handleDblClick()">
+            Double-Click Me
+        </div>
+    </div>
+
+    <!-- 5. DRAG & DROP + EVENT LOG -->
+    <div class="card card-full">
+        <span class="card-label">Event 05</span>
+        <h2>Drag & Drop Event + Live Log</h2>
+        <div class="divider"></div>
+        <p class="desc">Drag the black tile into the drop zone. All events are logged in real time below.</p>
+        <div class="drag-wrap" style="margin-bottom:1.5rem;">
+            <div id="dragItem"
+                 draggable="true"
+                 ondragstart="onDragStart(event)"
+                 ondragend="onDragEnd(event)">
+                Drag Me
+            </div>
+            <div id="dropZone"
+                 ondragover="onDragOver(event)"
+                 ondragleave="onDragLeave(event)"
+                 ondrop="onDrop(event)">
+                Drop Here
+            </div>
+        </div>
+
+        <div class="event-log">
+            <div class="log-label">Event Log</div>
+            <ul id="eventLog"></ul>
+        </div>
+    </div>
+
+</main>
+
+<footer>Experiment 7 — JavaScript Event Handling &nbsp;|&nbsp; Web Technologies 23CSE404</footer>
+
+<script>
+
+    /* ── helpers ── */
+    let clickCount    = 0;
+    let lockedColor   = null;
+
+    function logEvent(msg) {
+        const list = document.getElementById('eventLog');
+        const li   = document.createElement('li');
+        const now  = new Date();
+        const time = now.getHours().toString().padStart(2,'0') + ':' +
+                     now.getMinutes().toString().padStart(2,'0') + ':' +
+                     now.getSeconds().toString().padStart(2,'0');
+        li.innerHTML = `<span class="log-time">${time}</span><span class="log-msg">${msg}</span>`;
+        list.prepend(li);
+        if (list.children.length > 20) list.removeChild(list.lastChild);
+    }
+
+    /* ── 1. click ── */
+    function handleClick() {
+        clickCount++;
+        document.getElementById('clickNum').textContent = clickCount;
+        logEvent('Button clicked — total: ' + clickCount);
+    }
+
+    /* ── 2. mouse ── */
+    function changeColor() {
+        if (lockedColor) return;
+        document.getElementById('box').style.background = '#c9a96e22';
+        document.getElementById('box').style.borderColor = '#c9a96e';
+        document.getElementById('box').style.color = '#c9a96e';
+        logEvent('mouseover — box hovered');
+    }
+
+    function resetColor() {
+        if (lockedColor) return;
+        const box = document.getElementById('box');
+        box.style.background = 'var(--cream)';
+        box.style.borderColor = 'var(--light-gray)';
+        box.style.color = 'var(--gray)';
+        logEvent('mouseout — box reset');
+    }
+
+    function lockColor(color, el) {
+        lockedColor = lockedColor === color ? null : color;
+        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+        const box = document.getElementById('box');
+        if (lockedColor) {
+            el.classList.add('active');
+            box.style.background = color + '33';
+            box.style.borderColor = color;
+            box.style.color = color;
+            logEvent('Color locked: ' + color);
+        } else {
+            resetColor();
+            logEvent('Color lock released');
+        }
+    }
+
+    /* ── 3. keyboard ── */
+    function showText(input) {
+        const val   = input.value;
+        const chars = val.length;
+        const words = val.trim() === '' ? 0 : val.trim().split(/\s+/).length;
+        document.getElementById('output').textContent  = val || '\u00a0';
+        document.getElementById('charMsg').textContent = chars + ' character' + (chars !== 1 ? 's' : '');
+        document.getElementById('wordMsg').textContent = words + ' word' + (words !== 1 ? 's' : '');
+        logEvent('keyup — "' + val.slice(-1) + '" pressed, length: ' + chars);
+    }
+
+    /* ── 4. double click ── */
+    let dblState = 0;
+    const dblMessages = [
+        { text: '🎉 Double-clicked!',     bg: '#c9a96e33', border: '#c9a96e', color: '#c9a96e' },
+        { text: '✨ Again!',              bg: '#3498db22', border: '#3498db', color: '#3498db' },
+        { text: '🔥 You\'re fast!',        bg: '#e74c3c22', border: '#e74c3c', color: '#e74c3c' },
+        { text: '😂 Keep going...',        bg: '#2ecc7122', border: '#2ecc71', color: '#2ecc71' },
+        { text: '🤯 Incredible!',          bg: '#9b59b622', border: '#9b59b6', color: '#9b59b6' },
+    ];
+
+    function handleDblClick() {
+        const box = document.getElementById('dblBox');
+        const m   = dblMessages[dblState % dblMessages.length];
+        box.textContent       = m.text;
+        box.style.background  = m.bg;
+        box.style.borderColor = m.border;
+        box.style.color       = m.color;
+        dblState++;
+        logEvent('dblclick — state: ' + dblState);
+    }
+
+    /* ── 5. drag & drop ── */
+    function onDragStart(e) {
+        e.dataTransfer.setData('text', e.target.id);
+        e.target.style.opacity = '0.5';
+        logEvent('dragstart — dragging "' + e.target.id + '"');
+    }
+    function onDragEnd(e) {
+        e.target.style.opacity = '1';
+        logEvent('dragend');
+    }
+    function onDragOver(e) {
+        e.preventDefault();
+        document.getElementById('dropZone').classList.add('drag-over');
+        logEvent('dragover — hovering drop zone');
+    }
+    function onDragLeave(e) {
+        document.getElementById('dropZone').classList.remove('drag-over');
+        logEvent('dragleave — left drop zone');
+    }
+    function onDrop(e) {
+        e.preventDefault();
+        const zone = document.getElementById('dropZone');
+        zone.classList.remove('drag-over');
+        zone.style.background   = 'rgba(201,169,110,0.12)';
+        zone.style.borderColor  = 'var(--gold)';
+        zone.style.color        = 'var(--gold)';
+        zone.textContent        = '✓ Dropped!';
+        logEvent('drop — item dropped successfully ✓');
+        setTimeout(() => {
+            zone.style.background  = '';
+            zone.style.borderColor = '';
+            zone.style.color       = '';
+            zone.textContent       = 'Drop Here';
+        }, 2000);
+    }
+
+</script>
+</body>
+</html>
