@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiments</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top, #3e2723, #1b0f0a);
+            color: #f5ebe0;
+            overflow: hidden;
+        }
+
+        /* warm glow */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(121,85,72,0.3), transparent 70%);
+            top: -200px;
+            left: -200px;
+            filter: blur(120px);
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 1000px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADING */
+        h1 {
+            margin-bottom: 60px;
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            background: linear-gradient(90deg, #8d6e63, #a1887f, #d7ccc8);
+            -webkit-background-clip: text;
+            color: transparent;
+
+            text-shadow: 0 0 25px rgba(141,110,99,0.5);
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 220px);
+            gap: 35px;
+            justify-content: center;
+        }
+
+        /* BUTTON CARDS */
+        a {
+            text-decoration: none;
+            color: #f5ebe0;
+            padding: 35px;
+            border-radius: 18px;
+            background: #4e342e;
+            border: 1px solid #6d4c41;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* shine */
+        a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        a:hover::before {
+            opacity: 1;
+        }
+
+        a:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: #bcaaa4;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+        }
+
+        a:active {
+            transform: scale(0.96);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 180px);
+                gap: 25px;
+            }
+
+            a {
+                padding: 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Experiment Dashboard</h1>
+
+        <div class="grid">
+            <a href="./exp1/exp1_m.html">EXP1</a>
+            <a href="./exp3/exp3_m.html">EXP2</a>
+            <a href="./exp4/exp4_m.html">EXP4</a>
+            <a href="./exp5/exp5_m.html">EXP5</a>
+            <a href="./exp6/exp6_m.html">EXP6</a>
+            <a href="./exp7/exp7_m.html">EXP7</a>
+            <a href="https://nexacart.infinityfree.me/?i=1>">ExP11</a>
+            PROJECT
+        </div>
+
+    </div>
+</body>
+</html>
